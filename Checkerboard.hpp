@@ -1,7 +1,0 @@
-
-
-class Checkerboard {
-public:
-
-private:
-}
