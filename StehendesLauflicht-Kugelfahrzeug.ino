@@ -45,8 +45,6 @@ void rgb_muster() {
 
 // Steuer LED-Strip an, um 'rotationAngle' gedreht
 void muster_anwenden(int rotation_degrees) {
-  neo_pixel.clear();
-
   float anglePerLED = NEO_PIXEL_LED_COUNT / 360.f;
   int led_offset = (int)(anglePerLED * rotation_degrees);
   for (int i = 0; i < NEO_PIXEL_LED_COUNT; i++) {
