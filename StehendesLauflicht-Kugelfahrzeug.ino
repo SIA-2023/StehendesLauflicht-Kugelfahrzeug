@@ -38,7 +38,7 @@ void loop() {
   // test motor ansteuerung
   left_motor.set_speed(250);
   right_motor.set_speed(250);
-  float motor_speed = 10.f; // 8cm/s
+  float motor_speed = 10.f; // 10cm/s
   
   auto_position.y += motor_speed * delta_time;
   
