@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {  
   // test motor ansteuerung
-  ml=200;
+  ml=100;
   mr=200;
   left_motor.set_speed(ml);
   right_motor.set_speed(mr);
@@ -49,7 +49,7 @@ void loop() {
   const Farbe farbe1 = neo_pixel.Color(255, 0, 0);
   const Farbe farbe2 = neo_pixel.Color(0, 0, 0);
   for (int i = 0; i < NEO_PIXEL_LED_COUNT; i++) {
-    Vec2 licht_position = auto_position + lichter_abtaende[i].rotiert(Orientation);
+    Vec2 licht_position = auto_position + lichter_abtaende[i].rotiert(Orientation_radians);
     neo_pixel.setPixelColor(i, schachbrett_farbe(licht_position, 6.f, farbe1, farbe2));
   }
   neo_pixel.show();

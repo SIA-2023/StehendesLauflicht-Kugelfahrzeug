@@ -16,6 +16,7 @@ int Orientation;               //tatsächliche Orientation in °
 float b=0.13;                   //Abstand der Räder in m
 float a;                      //Differenz der Geschwindigkeiten
 Vec2 auto_position;
+float Orientation_radians = 0.f;
 
 void bestimme_position() {
   current_millis = millis();
@@ -26,6 +27,7 @@ void bestimme_position() {
   current_orient=prev_orient+((Vr-Vl)/(b))*t*k*r;
   current_orient=(current_orient+7200) % 3600;
   Orientation=current_orient/10;
+  Orientation_radians = Orientation * (PI / 180.f);
   
   // motor geschwindigkeit
   if (ml < 70 && (ml > -70) ) Vl=0;
@@ -44,9 +46,8 @@ void bestimme_position() {
 
   float d = ((Vl + Vr) / 2.f) * delta_time;
   d *= 20.f; // passt geschwindigkeit an
-  float orientation_radians = Orientation * (PI / 180.f);
-  auto_position.x += d * sin(orientation_radians);
-  auto_position.y += d * cos(orientation_radians);
+  auto_position.x += d * sin(Orientation_radians);
+  auto_position.y += d * cos(Orientation_radians);
   
   prev_orient=current_orient;
   prev_millis=current_millis;
