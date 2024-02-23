@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Vec2.hpp"
+
 #define NEO_PIXEL_PIN 11
 #define NEO_PIXEL_LED_COUNT 24
 

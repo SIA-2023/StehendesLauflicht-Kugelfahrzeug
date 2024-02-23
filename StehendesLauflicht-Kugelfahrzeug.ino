@@ -2,23 +2,22 @@
 
 #include <Adafruit_NeoPixel.h>
 
-#include "Vec2.hpp"
 #include "AutoConfig.hpp"
+#include "AutoPositionierung.h"
 
 // zum testen
 #include "Motor.h"
 Motor left_motor, right_motor;
-unsigned long prev_millis = 0;
 
 Adafruit_NeoPixel neo_pixel(NEO_PIXEL_LED_COUNT, NEO_PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
-Vec2 auto_position;
-float auto_orientation = 0.f;
 
 using Farbe = uint32_t;
 Farbe schachbrett_farbe(const Vec2& pos, float scale, Farbe farbe1, Farbe farbe2);
 
 void setup() {
+  Serial.begin(9600);
+  
   // zum testen
   left_motor.init(7, 8, 10, true);
   right_motor.init(5, 6, 9);
@@ -30,24 +29,27 @@ void setup() {
   prev_millis = millis();
 }
 
-void loop() {
-  unsigned long current_millis = millis();
-  float delta_time = (current_millis - prev_millis) * 0.001f;
-  prev_millis = current_millis;
-  
+void loop() {  
   // test motor ansteuerung
-  left_motor.set_speed(250);
-  right_motor.set_speed(250);
-  float motor_speed = 10.f; // 10cm/s
-  
-  auto_position.y += motor_speed * delta_time;
+  ml=200;
+  mr=200;
+  left_motor.set_speed(ml);
+  right_motor.set_speed(mr);
+
+  bestimme_position();
+
+ 
+  Serial.print("x: ");
+  Serial.print(auto_position.x);
+  Serial.print(", y: ");
+  Serial.println(auto_position.y);
   
   neo_pixel.clear();
   
   const Farbe farbe1 = neo_pixel.Color(255, 0, 0);
   const Farbe farbe2 = neo_pixel.Color(0, 0, 0);
   for (int i = 0; i < NEO_PIXEL_LED_COUNT; i++) {
-    Vec2 licht_position = auto_position + lichter_abtaende[i].rotiert(auto_orientation);
+    Vec2 licht_position = auto_position + lichter_abtaende[i].rotiert(Orientation);
     neo_pixel.setPixelColor(i, schachbrett_farbe(licht_position, 6.f, farbe1, farbe2));
   }
   neo_pixel.show();
