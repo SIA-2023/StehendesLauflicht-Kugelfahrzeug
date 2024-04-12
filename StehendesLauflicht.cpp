@@ -47,11 +47,11 @@ void StehendesLauflicht::setup() {
 void StehendesLauflicht::update(const Vec2& position, float orientation_radians) {
 	neo_pixel.clear();
 
-	const Farbe farbe1 = neo_pixel.Color(255, 0, 0);
-	const Farbe farbe2 = neo_pixel.Color(0, 0, 0);
+	const Farbe rot = neo_pixel.Color(255, 0, 0);
+	const Farbe gruen = neo_pixel.Color(0, 255, 0);
 	for (int i = 0; i < NEO_PIXEL_LED_COUNT; i++) {
 		Vec2 licht_position = position + lichter_abtaende[i].rotiert(orientation_radians);
-		neo_pixel.setPixelColor(i, schachbrett_farbe(licht_position, 6.f, farbe1, farbe2));
+		neo_pixel.setPixelColor(i, schachbrett_farbe(licht_position, 6.f, rot, gruen));
 	}
 	neo_pixel.show();
 }
